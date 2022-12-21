@@ -66,9 +66,11 @@
                                                 @if ($menu->kategori == 'makanan')
                                                     <td>{{ $menu->menu }}</td>
                                                     @for ($i = 1; $i <= 12; $i++)
-                                                        <td>{{ number_format($hasilBulan[$menu->menu][$i], 0, ',', '.') }}</td>
+                                                        <td>{{ number_format($hasilBulan[$menu->menu][$i], 0, ',', ',') }}</td>
                                                     @endfor
-                                                    <td>{{ number_format($totalMenu[$menu->menu], 0, ',', '.') }}</td>
+                                                    <td style="text-align:center; font-weight:bold;">
+                                                        {{ number_format($totalMenu[$menu->menu], 0, ',', ',') }}
+                                                    </td>
                                                 @endif
 
                                             </tr>
@@ -81,9 +83,10 @@
                                                 @if ($menu->kategori == 'minuman')
                                                     <td>{{ $menu->menu }}</td>
                                                     @for ($i = 1; $i <= 12; $i++)
-                                                        <td>{{ number_format($hasilBulan[$menu->menu][$i], 0, ',', '.') }}</td>
+                                                        <td>{{ number_format($hasilBulan[$menu->menu][$i], 0, ',', ',') }}</td>
                                                     @endfor
-                                                    <td>{{ number_format($totalMenu[$menu->menu], 0, ',', '.') }}</td>
+                                                    <td style="text-align:center; font-weight:bold;">
+                                                        {{ number_format($totalMenu[$menu->menu], 0, ',', ',') }}</td>
                                                 @endif
 
                                             </tr>
@@ -91,9 +94,9 @@
                                         <tr class="table-dark">
                                             <td><b>Total</b></td>
                                             @for ($i = 1; $i <= 12; $i++)
-                                                <td>{{ number_format($totalBulanan[$i], 0, ',', '.') }}</td>
+                                                <td>{{ number_format($totalBulanan[$i], 0, ',', ',') }}</td>
                                             @endfor
-                                            <td>{{ number_format($totalSemua, 0, ',', '.') }}</td>
+                                            <td>{{ number_format($totalSemua, 0, ',', ',') }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
