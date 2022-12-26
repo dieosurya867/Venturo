@@ -30,7 +30,7 @@
                                 </div>
                         </form>
 
-                        @isset($data)
+                        @isset($dataMenu)
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered" style="margin: 0;">
                                     <thead>
@@ -61,34 +61,39 @@
                                         <tr>
                                             <td class="table-secondary" colspan="14"><b>Makanan</b></td>
                                         </tr>
-                                        @foreach ($data as $menu)
+                                        @foreach ($dataMenu as $menu)
                                             <tr>
+
                                                 @if ($menu->kategori == 'makanan')
+                                                    {{-- mengeluarkan nama nama makanan --}}
                                                     <td>{{ $menu->menu }}</td>
+                                                    {{-- mengeluarkan data menu makanan --}}
                                                     @for ($i = 1; $i <= 12; $i++)
-                                                        <td>{{ number_format($hasilBulan[$menu->menu][$i], 0, ',', ',') }}</td>
+                                                        <td>{{ number_format($hasilPerbulan[$menu->menu][$i], 0, ',', ',') }}
+                                                        </td>
                                                     @endfor
                                                     <td style="text-align:center; font-weight:bold;">
-                                                        {{ number_format($totalMenu[$menu->menu], 0, ',', ',') }}
-                                                    </td>
+                                                        {{ number_format($totalMenu[$menu->menu], 0, ',', ',') }}</td>
                                                 @endif
-
                                             </tr>
                                         @endforeach
                                         <tr>
                                             <td class="table-secondary" colspan="14"><b>Minuman</b></td>
                                         </tr>
-                                        @foreach ($data as $menu)
+                                        @foreach ($dataMenu as $menu)
                                             <tr>
+
                                                 @if ($menu->kategori == 'minuman')
+                                                    {{-- mengeluarkan nama nama makanan --}}
                                                     <td>{{ $menu->menu }}</td>
+                                                    {{-- mengeluarkan data menu makanan --}}
                                                     @for ($i = 1; $i <= 12; $i++)
-                                                        <td>{{ number_format($hasilBulan[$menu->menu][$i], 0, ',', ',') }}</td>
+                                                        <td>{{ number_format($hasilPerbulan[$menu->menu][$i], 0, ',', ',') }}
+                                                        </td>
                                                     @endfor
                                                     <td style="text-align:center; font-weight:bold;">
                                                         {{ number_format($totalMenu[$menu->menu], 0, ',', ',') }}</td>
                                                 @endif
-
                                             </tr>
                                         @endforeach
                                         <tr class="table-dark">

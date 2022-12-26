@@ -37,57 +37,72 @@ class VenturoController extends Controller
     public function store(Request $request)
     {
 
+        $tahun = $request->tahun;
         $url = "http://tes-web.landa.id/intermediate/menu";
         $content = file_get_contents($url);
-        $data = json_decode($content);
+        $dataMenu = json_decode($content);
 
-        $tahun = $request->tahun;
         $url2 = "http://tes-web.landa.id/intermediate/transaksi?tahun=" . $tahun;
         $content2 = file_get_contents($url2);
-        $data2 = json_decode($content2);
+        $dataTransaksi = json_decode($content2);
 
         $totalSemua = 0;
 
-        //hitung Perbulan
-        foreach ($data as $menu) {
+        //data perbulan dengan hasil 0
+        foreach ($dataMenu as $menu) {
             for ($i = 1; $i <= 12; $i++) {
-                $hasilBulan[$menu->menu][$i] = 0;
+                $hasilPerbulan[$menu->menu][$i] = 0;
             }
         }
 
-        foreach ($data2 as $item) {
-            $bulan = date('n', strtotime($item->tanggal));
-            $hasilBulan[$item->menu][$bulan] += $item->total;
+        //mengisi data perbulan
+        foreach ($dataTransaksi as $transaksi) {
+            $bulan = date('n', strtotime($transaksi->tanggal));
+            $hasilPerbulan[$transaksi->menu][$bulan] += $transaksi->total;
         }
 
         //total perMenu
-        foreach ($data as $itemMenu) {
+        foreach ($dataMenu as $itemMenu) {
             $totalMenu[$itemMenu->menu] = 0;
         }
 
-        foreach ($data2 as $hitungMenu) {
+        //mengisi data perMenu
+        foreach ($dataTransaksi as $hitungMenu) {
             $totalMenu[$hitungMenu->menu] += $hitungMenu->total;
         }
 
-        // hitung totalPerbulan
-        foreach ($data2 as $itemBulan) {
+        //hitung totalPerbulan
+        foreach ($dataTransaksi as $itemBulan) {
             for ($i = 1; $i <= 12; $i++) {
                 $totalBulanan[$i] = 0;
             }
         }
 
-        foreach ($data2 as $hitungPerbulan) {
-            $day = date('n', strtotime($hitungPerbulan->tanggal));
-            $totalBulanan[$day] += $hitungPerbulan->total;
+        //mengisi data Total Perbulan Dari Keseluruhan Menu
+        foreach ($dataTransaksi as $hitungPerbulan) {
+            $bulan = date('n', strtotime($hitungPerbulan->tanggal));
+            $totalBulanan[$bulan] += $hitungPerbulan->total;
+        }
+
+        //membuat data totalPerbulan Dari Keseluruhan Menu
+        foreach ($dataTransaksi as $itemBulan) {
+            for ($i = 1; $i <= 12; $i++) {
+                $totalBulanan[$i] = 0;
+            }
+        }
+
+        //mengisi data totalPerbulan Dari Keseluruhan Menu
+        foreach ($dataTransaksi as $hitungPerbulan) {
+            $bulan = date('n', strtotime($hitungPerbulan->tanggal));
+            $totalBulanan[$bulan] += $hitungPerbulan->total;
         }
 
         //total keseluruhan
-        foreach ($data2 as $hitungSemua) {
+        foreach ($dataTransaksi as $hitungSemua) {
             $totalSemua += $hitungSemua->total;
         }
 
-        // dd($totalMenu);
-        return view('pages.admin.venturo', compact('data', 'data2', 'hasilBulan', 'totalMenu', 'totalBulanan', 'totalSemua'));
+        return view('pages.admin.venturo', compact('dataMenu', 'totalMenu', 'hasilPerbulan', 'totalBulanan', 'totalSemua'));
     }
 
     /**
