@@ -166,7 +166,6 @@
                                                             </thead>
                                                             <tbody>
                                                                 @foreach ($dataTransaksi as $transaksi)
-                                                                    {{-- Translate Tanggal ke angka dari 1-12 --}}
                                                                     @php
                                                                         $bulan = date('n', strtotime($transaksi->tanggal));
                                                                     @endphp
@@ -184,9 +183,8 @@
                                                             </tbody>
                                                         </table>
                                                         <hr>
-                                                        <h6>Harga Total :
-                                                            <span class="badge bg-info">Rp
-                                                                {{ number_format($hasilPerbulan[$menu->menu][$i], 0, ',', '.') }}</span>
+                                                        <h6 style="font-weight: bold;">Harga Total : Rp
+                                                            {{ number_format($hasilPerbulan[$menu->menu][$i], 0, ',', '.') }}</span>
                                                         </h6>
                                                     </div>
                                                     <div class="modal-footer">
