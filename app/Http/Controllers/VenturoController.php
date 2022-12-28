@@ -36,7 +36,6 @@ class VenturoController extends Controller
      */
     public function store(Request $request)
     {
-
         $tahun = $request->tahun;
         $url = "http://tes-web.landa.id/intermediate/menu";
         $content = file_get_contents($url);
@@ -48,12 +47,22 @@ class VenturoController extends Controller
 
         $totalSemua = 0;
 
-        //data perbulan dengan hasil 0
+        //mengambil menu detail tiap bulan
         foreach ($dataMenu as $menu) {
             for ($i = 1; $i <= 12; $i++) {
+                setlocale(LC_ALL, 'id-ID', 'id_ID');
                 $hasilPerbulan[$menu->menu][$i] = 0;
+                $bulan = strftime('%B', mktime(0, 0, 0, $i, 1));
+                $judul[$menu->menu][$i] = "Detail Penjualan $menu->menu Bulan $bulan";
             }
         }
+
+        //data perbulan dengan hasil 0
+        // foreach ($dataMenu as $menu) {
+        //     for ($i = 1; $i <= 12; $i++) {
+        //         $hasilPerbulan[$menu->menu][$i] = 0;
+        //     }
+        // }
 
         //mengisi data perbulan
         foreach ($dataTransaksi as $transaksi) {
@@ -102,7 +111,9 @@ class VenturoController extends Controller
             $totalSemua += $hitungSemua->total;
         }
 
-        return view('pages.admin.venturo', compact('dataMenu', 'totalMenu', 'hasilPerbulan', 'totalBulanan', 'totalSemua'));
+
+
+        return view('pages.admin.venturo', compact('dataMenu', 'dataTransaksi',  'totalMenu', 'hasilPerbulan', 'totalBulanan', 'totalSemua', 'judul'));
     }
 
     /**
@@ -111,9 +122,8 @@ class VenturoController extends Controller
      * @param  \App\Models\Venturo  $venturo
      * @return \Illuminate\Http\Response
      */
-    public function show(Venturo $venturo)
+    public function show(Request $request, $id)
     {
-        //
     }
 
     /**

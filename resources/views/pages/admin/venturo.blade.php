@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Admin / </span>Perhitungan BMI</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Admin / </span>Laporan penjualan tahunan per menu</h4>
 
         <!-- Form controls -->
         <div class="row">
@@ -35,67 +35,92 @@
                                 <table class="table table-hover table-bordered" style="margin: 0;">
                                     <thead>
                                         <tr class="table-dark">
-                                            <th rowspan="2" style="text-align:center;vertical-align: middle;width: 250px;">
+                                            <th rowspan="2"
+                                                style="text-align:center;vertical-align: middle;width: 250px; color:white;">
                                                 Menu</th>
-                                            <th colspan="12" style="text-align: center;">Periode Pada 2021
+                                            <th colspan="12" style="text-align: center; color:white;">Periode Pada 2021
                                             </th>
-                                            <th rowspan="2" style="text-align:center;vertical-align: middle;width:75px">Total
+                                            <th rowspan="2"
+                                                style="text-align:center;vertical-align: middle;width:75px; color:white;">Total
                                             </th>
                                         </tr>
                                         <tr class="table-dark">
-                                            <th style="text-align: center;width: 75px;">Jan</th>
-                                            <th style="text-align: center;width: 75px;">Feb</th>
-                                            <th style="text-align: center;width: 75px;">Mar</th>
-                                            <th style="text-align: center;width: 75px;">Apr</th>
-                                            <th style="text-align: center;width: 75px;">Mei</th>
-                                            <th style="text-align: center;width: 75px;">Jun</th>
-                                            <th style="text-align: center;width: 75px;">Jul</th>
-                                            <th style="text-align: center;width: 75px;">Ags</th>
-                                            <th style="text-align: center;width: 75px;">Sep</th>
-                                            <th style="text-align: center;width: 75px;">Okt</th>
-                                            <th style="text-align: center;width: 75px;">Nov</th>
-                                            <th style="text-align: center;width: 75px;">Des</th>
+                                            <th style="text-align: center;width: 75px; color:white">Jan</th>
+                                            <th style="text-align: center;width: 75px; color:white">Feb</th>
+                                            <th style="text-align: center;width: 75px; color:white">Mar</th>
+                                            <th style="text-align: center;width: 75px; color:white">Apr</th>
+                                            <th style="text-align: center;width: 75px; color:white">Mei</th>
+                                            <th style="text-align: center;width: 75px; color:white">Jun</th>
+                                            <th style="text-align: center;width: 75px; color:white">Jul</th>
+                                            <th style="text-align: center;width: 75px; color:white">Ags</th>
+                                            <th style="text-align: center;width: 75px; color:white">Sep</th>
+                                            <th style="text-align: center;width: 75px; color:white">Okt</th>
+                                            <th style="text-align: center;width: 75px; color:white">Nov</th>
+                                            <th style="text-align: center;width: 75px; color:white">Des</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td class="table-secondary" colspan="14"><b>Makanan</b></td>
                                         </tr>
+
+                                        @php
+                                            $id = 0;
+                                        @endphp
+
                                         @foreach ($dataMenu as $menu)
                                             <tr>
-
+                                                {{-- mengeluarkan data makanan --}}
                                                 @if ($menu->kategori == 'makanan')
-                                                    {{-- mengeluarkan nama nama makanan --}}
+                                                    {{-- mengeluarkan data nama menu --}}
                                                     <td>{{ $menu->menu }}</td>
-                                                    {{-- mengeluarkan data menu makanan --}}
+
                                                     @for ($i = 1; $i <= 12; $i++)
-                                                        <td>{{ number_format($hasilPerbulan[$menu->menu][$i], 0, ',', ',') }}
+                                                        {{-- memberi id total bulanan setiap menu makanan --}}
+                                                        @php
+                                                            $id++;
+                                                        @endphp
+
+                                                        <td data-bs-toggle="modal" data-bs-target="#makanan{{ $id }}">
+                                                            {{ number_format($hasilPerbulan[$menu->menu][$i], 0, ',', '.') }}
                                                         </td>
                                                     @endfor
-                                                    <td style="text-align:center; font-weight:bold;">
-                                                        {{ number_format($totalMenu[$menu->menu], 0, ',', ',') }}</td>
-                                                @endif
+
+                                                    <td style="font-weight:bold;">
+                                                        {{ number_format($totalMenu[$menu->menu], 0, ',', '.') }}
+                                                    </td>
                                             </tr>
+                                        @endif
                                         @endforeach
+
                                         <tr>
                                             <td class="table-secondary" colspan="14"><b>Minuman</b></td>
                                         </tr>
-                                        @foreach ($dataMenu as $menu)
-                                            <tr>
 
-                                                @if ($menu->kategori == 'minuman')
-                                                    {{-- mengeluarkan nama nama makanan --}}
+                                        @foreach ($dataMenu as $menu)
+                                            {{-- mengeluarkan data minuman --}}
+                                            @if ($menu->kategori == 'minuman')
+                                                <tr>
                                                     <td>{{ $menu->menu }}</td>
-                                                    {{-- mengeluarkan data menu makanan --}}
+
                                                     @for ($i = 1; $i <= 12; $i++)
-                                                        <td>{{ number_format($hasilPerbulan[$menu->menu][$i], 0, ',', ',') }}
+                                                        {{-- memberi id total bulanan setiap menu makanan --}}
+                                                        @php
+                                                            $id++;
+                                                        @endphp
+
+                                                        <td data-bs-toggle="modal" data-bs-target="#makanan{{ $id }}">
+                                                            {{ number_format($hasilPerbulan[$menu->menu][$i], 0, ',', '.') }}
                                                         </td>
                                                     @endfor
-                                                    <td style="text-align:center; font-weight:bold;">
-                                                        {{ number_format($totalMenu[$menu->menu], 0, ',', ',') }}</td>
-                                                @endif
-                                            </tr>
+
+                                                    <td style="font-weight:bold;" data-bs-toggle="modal">
+                                                        {{ number_format($totalMenu[$menu->menu], 0, ',', '.') }}
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @endforeach
+
                                         <tr class="table-dark">
                                             <td><b>Total</b></td>
                                             @for ($i = 1; $i <= 12; $i++)
@@ -105,6 +130,74 @@
                                         </tr>
                                     </tbody>
                                 </table>
+
+                                @php
+                                    $modal = 0;
+                                @endphp
+
+                                @foreach ($dataMenu as $menu)
+                                    {{-- menampilkan id pilihan modal --}}
+                                    @for ($i = 1; $i <= 12; $i++)
+                                        @php
+                                            $modal++;
+                                        @endphp
+
+                                        {{-- MODAL DETAIL MAKANAN --}}
+                                        <div class="modal fade" id="makanan{{ $modal }}"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                            Detail Total Bulanan {{ $menu->menu }}</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5 class="text-center">{{ $judul[$menu->menu][$i] }}</h5>
+
+                                                        {{-- Mengambil isi data transaksi --}}
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Tanggal Transaksi</th>
+                                                                    <th>Total Transaksi</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($dataTransaksi as $transaksi)
+                                                                    {{-- Translate Tanggal ke angka dari 1-12 --}}
+                                                                    @php
+                                                                        $bulan = date('n', strtotime($transaksi->tanggal));
+                                                                    @endphp
+
+                                                                    {{-- Jika Translate tanggal sesuai dengan looping dan menu menu sama dengan transaksi menu --}}
+                                                                    @if ($bulan == $i && $menu->menu == $transaksi->menu)
+                                                                        <tr>
+                                                                            <td>{{ $transaksi->tanggal }}</td>
+                                                                            <td>Rp
+                                                                                {{ number_format($transaksi->total, 0, ',', '.') }}
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                        <hr>
+                                                        <h6>Harga Total :
+                                                            <span class="badge bg-info">Rp
+                                                                {{ number_format($hasilPerbulan[$menu->menu][$i], 0, ',', '.') }}</span>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger"
+                                                            data-bs-dismiss="modal">Tutup</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endfor
+                                @endforeach
                             @endisset
                         </div>
 
