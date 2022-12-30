@@ -50,7 +50,6 @@ class VenturoController extends Controller
         //mengambil menu detail tiap bulan
         foreach ($dataMenu as $menu) {
             for ($i = 1; $i <= 12; $i++) {
-                setlocale(LC_ALL, 'id-ID', 'id_ID');
                 $hasilPerbulan[$menu->menu][$i] = 0;
                 $bulan = strftime('%B', mktime(0, 0, 0, $i, 1));
                 $judul[$menu->menu][$i] = "Detail Penjualan $menu->menu Bulan $bulan";
